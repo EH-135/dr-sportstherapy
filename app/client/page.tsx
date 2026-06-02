@@ -1,14 +1,7 @@
 'use client'
 
-export const dynamic = 'force-dynamic'
-
-import { useState, useEffect } from 'react'
-import { createClient } from '@supabase/supabase-js'
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
+import { useState, useEffect, useRef } from 'react'
+import { createClient, SupabaseClient } from '@supabase/supabase-js'
 
 const C = {
   bg: '#02040a', panel: '#070d14', border: '#0d1e2e', borderHi: '#1a3448',
@@ -41,6 +34,17 @@ type Lead = {
 }
 
 export default function ClientPortal() {
+  const supabaseRef = useRef<SupabaseClient | null>(null)
+  function getSupabase() {
+    if (!supabaseRef.current) {
+      supabaseRef.current = createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+      )
+    }
+    return supabaseRef.current
+  }
+
   const [authed, setAuthed] = useState(false)
   const [code, setCode] = useState('')
   const [error, setError] = useState('')
@@ -60,7 +64,7 @@ export default function ClientPortal() {
   useEffect(() => {
     if (!authed) return
     setLoading(true)
-    supabase
+    getSupabase()
       .from('quiz_leads')
       .select('*')
       .eq('doctor_slug', 'dr-sportstherapy')

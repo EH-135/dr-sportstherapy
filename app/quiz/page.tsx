@@ -1,14 +1,7 @@
 'use client'
 
-export const dynamic = 'force-dynamic'
-
-import { useState, useEffect } from 'react'
-import { createClient } from '@supabase/supabase-js'
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
+import { useState, useEffect, useRef } from 'react'
+import { createClient, SupabaseClient } from '@supabase/supabase-js'
 
 const C = {
   bg: '#02040a', panel: '#070d14', border: '#0d1e2e', borderHi: '#1a3448',
@@ -69,6 +62,17 @@ export default function QuizPage() {
   const [email,   setEmail]   = useState('')
   const [whatsapp,setWhats]   = useState('')
   const [submitting, setSub]  = useState(false)
+  const supabaseRef = useRef<SupabaseClient | null>(null)
+
+  function getSupabase() {
+    if (!supabaseRef.current) {
+      supabaseRef.current = createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+      )
+    }
+    return supabaseRef.current
+  }
 
   useEffect(() => { fetchNext([], { guarded: 0, asymmetrical: 0, overManaged: 0, glassCannon: 0 }) }, [])
 
@@ -105,7 +109,7 @@ export default function QuizPage() {
     if (!name.trim() || !email.trim()) return
     setSub(true)
     const pattern = dominant(scores)
-    await supabase.from('quiz_leads').insert({
+    await getSupabase().from('quiz_leads').insert({
       doctor_slug: 'dr-sportstherapy',
       name: name.trim(), email: email.trim(),
       whatsapp: whatsapp.trim() || null,
