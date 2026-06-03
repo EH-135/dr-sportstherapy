@@ -4,36 +4,36 @@ import { useState, useEffect, useRef } from 'react'
 import { createClient, SupabaseClient } from '@supabase/supabase-js'
 
 const C = {
-  bg: '#02040a', panel: '#070d14', border: '#0d1e2e', borderHi: '#1a3448',
-  purple: '#7c3aed', purpleHi: '#a78bfa', cyan: '#06b6d4', green: '#10b981',
-  amber: '#f59e0b', red: '#ef4444', textHi: '#e8f4ff', textMid: '#6b8fa8', textLow: '#2a3f52',
+  bg: '#FAF8F5', panel: '#F1ECE2', border: '#E0D5C5', borderHi: '#C8B89A',
+  purple: '#2D6A4F', purpleHi: '#52B788', cyan: '#40916C', green: '#1B4332',
+  amber: '#B5884C', red: '#C1440E', textHi: '#1A1410', textMid: '#6B5E4E', textLow: '#B5A898',
   mono: '"Cascadia Code","Fira Code",monospace', sans: '-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif',
 }
 
 const PATTERNS = {
   guarded: {
-    name: 'Guarded System', color: '#7c3aed', icon: '🛡️',
+    name: 'Guarded System', color: '#2D6A4F', icon: '🛡️',
     tagline: 'Your body is in protection mode.',
     description: `Your nervous system has learned that tension equals safety. The problem is it never turns off — so you're spending enormous energy just to feel "normal." You're not weak or broken. Your body is doing exactly what it learned to do. We need to teach it something new.`,
     whatItMeans: ['Constantly bracing even at rest', 'Breathing feels restricted or shallow', 'Mentally exhausted from managing your body', 'Avoids certain movements "just in case"'],
     nextStep: 'The RESET phase targets your nervous system first — not the pain site. When your body stops bracing, everything else becomes possible.',
   },
   asymmetrical: {
-    name: 'Asymmetrical System', color: '#06b6d4', icon: '⚖️',
+    name: 'Asymmetrical System', color: '#40916C', icon: '⚖️',
     tagline: 'Your load is living on one side.',
     description: `One side of your body is doing most of the work — and the other has quietly checked out. This creates predictable, recurring problems on the overloaded side. It's not about stretching the tight side or strengthening the weak side. It's about restoring the conversation between both halves.`,
     whatItMeans: ['One hip sits higher or feels heavier', 'One shoulder sits forward or higher', 'Symptoms keep returning on the same side', 'Feels more stable or "at home" on one side'],
     nextStep: 'The REALIGN phase restores symmetry of load — so neither side compensates for the other. That\'s how recurring one-sided pain finally stops.',
   },
   overManaged: {
-    name: 'Over-Managed System', color: '#f59e0b', icon: '🔄',
+    name: 'Over-Managed System', color: '#B5884C', icon: '🔄',
     tagline: "You've tried everything — and it keeps coming back.",
     description: `You're not doing the wrong things. You're doing the right things in the wrong order. Massage, physio, adjustments — they treat the output, not the input. When the underlying pattern isn't addressed first, the body resets to what it knows. That's why relief fades.`,
     whatItMeans: ['Multiple treatments tried — temporary relief only', 'Feels better after sessions but not in daily life', 'Symptoms return with stress or activity', 'Nothing has truly "stuck" long-term'],
     nextStep: 'We start earlier in the chain. Before treatment, before rehab — we identify what the body keeps resetting to, and change that first.',
   },
   glassCannon: {
-    name: 'Glass Cannon', color: '#10b981', icon: '⚡',
+    name: 'Glass Cannon', color: '#1B4332', icon: '⚡',
     tagline: 'High output. Low resilience.',
     description: `You can train hard, push through, perform. But one bad session, one stressful week, one awkward movement — and you're back to square one. Your capacity has a ceiling your body never told you about. We build the foundation under the engine so it stops breaking down under load.`,
     whatItMeans: ['Active and disciplined but fragile', 'Breaks down from stress, not just injury', 'Recovery is inconsistent — sometimes great, sometimes terrible', 'Capacity feels unpredictable'],
@@ -245,7 +245,7 @@ export default function QuizPage() {
 function Shell({ children }: { children: React.ReactNode }) {
   return (
     <div style={{ minHeight: '100vh', background: C.bg, display: 'flex', alignItems: 'flex-start', justifyContent: 'center', padding: '36px 20px' }}>
-      <style>{`* { box-sizing:border-box; margin:0; padding:0 } body { background:${C.bg} } input::placeholder { color:${C.textLow} } button { font-family:${C.sans} }`}</style>
+      <style>{`* { box-sizing:border-box; margin:0; padding:0 } body { background:${C.bg} } input::placeholder { color:${C.textLow} } button { font-family:${C.sans} } input { font-family:${C.sans} }`}</style>
       <div style={{ width: '100%', maxWidth: 560 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 36 }}>
           <div style={{ width: 8, height: 8, borderRadius: '50%', background: C.purple, boxShadow: `0 0 10px ${C.purple}` }} />
